@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/space-grotesk/wght.css";
+@import "@fontsource-variable/inter/wght.css";
+
+/*
+ * Spitch design tokens.
+ * Sections alternate between ink (dark) and paper (light). Orange is the one accent:
+ * CTAs, highlights and scores. On light grounds, orange text uses brand-ink for contrast.
+ * Shape rule: pills for everything pressed and for tags, 24px cards, 12px inputs.
+ */
+
+/* Metric-matched fallbacks, so text does not jump when the web fonts arrive. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 109.4%;
+  ascent-override: 88.56%;
+  descent-override: 22.05%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 112.94%;
+  ascent-override: 87.13%;
+  descent-override: 25.85%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  --font-sans: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", "Space Grotesk Fallback", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #0e0f12;
+  --color-ink-2: #17181d;
+  --color-paper: #f6f4ef;
+  --color-card: #ffffff;
+  --color-brand: #ff5a1f;
+  --color-brand-ink: #b8400f;
+  --color-muted: #6b6b72;
+  --color-muted-dark: #a3a3ab;
+  --color-line: #e4e1d9;
+  --color-line-dark: #2a2b31;
+  --color-danger: #b42318;
+
+  --radius-card: 24px;
+  --radius-input: 12px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* shadcn/ui tokens, mapped onto the Spitch palette. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+}
+
+:root {
+  --background: #f6f4ef;
+  --foreground: #0e0f12;
+  --primary: #0e0f12;
+  --primary-foreground: #ffffff;
+  --muted-foreground: #6b6b72;
+  --border: #e4e1d9;
+  --input: #8a8a91;
+  --ring: #0e0f12;
+  --destructive: #b42318;
+  --radius: 12px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    background: var(--color-ink);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: rgb(255 90 31 / 0.3); }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-brand); }
+  .on-dark .on-light :focus-visible { outline-color: var(--color-ink); }
+
+  section[id], #waitlist { scroll-margin-top: 80px; }
+}
+
+@layer components {
+  /* Pills: every button on the site. Orange with ink text keeps 6:1 contrast. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: transform 140ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+  .btn:active { transform: translateY(1px) scale(0.98); }
+  .btn[disabled] { cursor: progress; opacity: 0.75; }
+  .btn-primary { background: var(--color-brand); color: var(--color-ink); }
+  .btn-ghost-dark { color: #fff; border-color: rgb(255 255 255 / 0.32); }
+  .btn-ghost-light { color: var(--color-ink); border-color: var(--color-ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { background: #ff7040; }
+    .btn-ghost-dark:hover { border-color: #fff; background: rgb(255 255 255 / 0.06); }
+    .btn-ghost-light:hover { background: var(--color-ink); color: #fff; }
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .container-x {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
+  }
+}
+
+/* Scroll reveal: content rises gently into place once, only when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 640ms var(--ease-out), transform 640ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .js [data-reveal][data-shown] { opacity: 1; transform: none; }
+
+  /* Hero entrance, staggered. */
+  .hero-rise { animation: rise 720ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 80ms + 60ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px); } }
+
+  /* The phone arrives, then the top card nudges right once: a hint that pitches are swiped. */
+  .phone-in { animation: phone-in 900ms var(--ease-out) 200ms both; }
+  @keyframes phone-in { from { opacity: 0; transform: translateY(32px) rotate(2deg); } }
+  .swipe-hint { animation: swipe-hint 1400ms var(--ease-out) 1300ms both; }
+  @keyframes swipe-hint {
+    0%, 100% { transform: none; }
+    35% { transform: translateX(22px) rotate(3deg); }
+    60% { transform: translateX(-4px) rotate(-0.5deg); }
+  }
+}
