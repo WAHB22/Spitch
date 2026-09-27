@@ -28,5 +28,7 @@ function siteMeta(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), siteMeta()],
+  // NEXT_PUBLIC_ too, so the variables Supabase's Vercel integration creates work as they are.
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   resolve: { alias: { '@': path.resolve(import.meta.dirname, './src') } },
 })

@@ -57,7 +57,7 @@ export async function joinWaitlist(input: WaitlistInput): Promise<SubmitResult> 
   };
 
   if (isMockMode()) {
-    console.warn("[waitlist] Mock mode: VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing, so nothing was saved.", row);
+    console.warn("[waitlist] Mock mode: the Supabase URL or key is missing, so nothing was saved.", row);
     await wait(700);
     if (mockEmails.has(row.email)) return "duplicate";
     mockEmails.add(row.email);

@@ -62,6 +62,7 @@ The anon key is public by design. `.env` is gitignored, and no service-role key 
 3. Before the first deploy, open **Environment Variables** and add, for Production and Preview:
    - `VITE_SUPABASE_URL` = your Project URL
    - `VITE_SUPABASE_ANON_KEY` = your anon key
+   If you connected Supabase through Vercel's Supabase integration, it creates `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The site accepts those names too, so nothing else is needed.
 4. Deploy. `vercel.json` already rewrites every path to `index.html`, so `/privacy` and `/terms` load directly and on refresh.
 5. Variables starting with `VITE_` are built into the site, so after changing one, redeploy (**Deployments**, the latest one, **Redeploy**).
 6. Add your domain under **Settings, Domains**, then set `SITE_URL` in `src/config.ts` to it and redeploy.

@@ -13,6 +13,11 @@ export const WORDMARK = BRAND.toLowerCase();
  */
 export const SITE_URL = "https://spitch.example";
 
-/** Supabase keys come from the environment (Vite exposes only VITE_ variables to the browser). */
-export const SUPABASE_URL = (import.meta.env?.VITE_SUPABASE_URL as string | undefined) ?? "";
-export const SUPABASE_ANON_KEY = (import.meta.env?.VITE_SUPABASE_ANON_KEY as string | undefined) ?? "";
+/**
+ * Supabase keys come from the environment. Both naming styles work: VITE_ (this project's own) and
+ * NEXT_PUBLIC_ (what Supabase's Vercel integration creates). Only these public values reach the browser.
+ */
+const env = (import.meta.env ?? {}) as Record<string, string | undefined>;
+export const SUPABASE_URL = env.VITE_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL || "";
+export const SUPABASE_ANON_KEY =
+  env.VITE_SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
